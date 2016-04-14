@@ -8,6 +8,6 @@ args = sys.argv
 attributes, trainingData = util.readFile(args[1])
 
 naivebayeslearner = NBL.NBL(trainingData, attributes)
-
+naivebayeslearner.printProbabilities()
 
 testAttributes, testData = util.readFile(args[2])
