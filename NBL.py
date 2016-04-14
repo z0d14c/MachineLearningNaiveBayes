@@ -5,7 +5,7 @@ class NBL:
     # classProbabilities = {}
     attributes = []
     attrInfo = {} #attr probability-relevant info
-    enumKeys = ['positive', 'negative']
+    enumKeys = ['negative', 'positive']
     trainingdata = []
     digitsToRoundTo = 3
 
@@ -50,6 +50,7 @@ class NBL:
 
     # print probabilities after training
     def printProbabilities(self):
+        print("PRINTING PARAMETERS")
         for classification in range(0, 2):
             printStr = ""
             printStr += self.printProbability(self.attrInfo['class'][self.enumKeys[classification]], classification, classification)
@@ -61,7 +62,6 @@ class NBL:
 
     # print an individual probability
     def printProbability(self, attrObj, classification, attrValue):
-        print("PRINTING PARAMETERS")
         stringTemplate = "P({0}={1}{2})="
         stringifiedClassification = str(classification)
         if attrObj['name'] == 'class':
@@ -82,4 +82,5 @@ class NBL:
         total = len(self.trainingdata)
         return round((numerator / total), self.digitsToRoundTo)
 
-    # def classifyInstance(self):
+    # use learned naive bayes to classify an instance
+    # def classifyInstance(self, instance):
