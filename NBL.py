@@ -82,5 +82,33 @@ class NBL:
         total = len(self.trainingdata)
         return round((numerator / total), self.digitsToRoundTo)
 
+    # classify a list of data
+    def classifyData(self, data, nameOfData):
+        print("CLASSIFYING " + nameOfData)
+        numCorrect = 0
+        totalItems = len(data)
+        for item in data:
+            numCorrect += self.classifyInstance(item)
+        accuracy = round(numCorrect / totalItems, self.digitsToRoundTo) * 100
+        print("Accuracy on {} ({} instances): {}%".format(nameOfData, str(totalItems), str(accuracy)))
+
     # use learned naive bayes to classify an instance
-    # def classifyInstance(self, instance):
+    def classifyInstance(self, instance):
+        guess = 2
+        prevGuessProbability = 0
+        for classValue in range(0, 2):
+            priorProb = self.priorProbability(classValue)
+            runningProb = priorProb
+            for attrKey, attrValue in self.attrInfo.items():
+                if attrKey != 'class':
+                    instanceVal = instance[attrKey]
+                    conditionalProb = self.attrProbability(attrValue[self.enumKeys[instanceVal]], classValue)
+                    runningProb = runningProb * conditionalProb
+            if runningProb > prevGuessProbability:
+                guess = classValue
+            prevGuessProbability = runningProb
+        if str(guess) == str(instance['class']):
+            return 1
+        else:
+            return 0
+
