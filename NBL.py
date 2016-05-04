@@ -74,13 +74,21 @@ class NBL:
         enumClassKeys = ["negativeClass", "positiveClass"]
         numerator = attrObj[enumClassKeys[classValue]]
         total = attrObj['total']
-        return round((numerator / total), self.digitsToRoundTo)
+        if total == 0:
+            returnVal = 0
+        else:
+            returnVal = round((numerator / total), self.digitsToRoundTo)
+        return returnVal
 
     # return prior probability value
     def priorProbability(self, classValue):
         numerator = self.attrInfo['class'][self.enumKeys[classValue]]['total']
         total = len(self.trainingdata)
-        return round((numerator / total), self.digitsToRoundTo)
+        if total == 0:
+            returnVal = 0
+        else:
+            returnVal = round((numerator / total), self.digitsToRoundTo)
+        return returnVal
 
     # classify a list of data
     def classifyData(self, data, nameOfData):
